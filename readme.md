@@ -5,6 +5,5 @@ pythonのバージョン: 3.10.11
 
 以下のコマンドを実行してください。
 `python -m venv venv`
-`source venv/bin/activate (linux)`
-`venv\Scripts\activate (windows)`
+`venv\Scripts\activate`(windows) or `source venv/bin/activate`(linux)
 `pip install -r requirements.txt`
