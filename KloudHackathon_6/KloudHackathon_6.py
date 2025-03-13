@@ -1,8 +1,6 @@
+from turtle import width
+
 import reflex as rx
-
-
-class State(rx.State):
-    pass
 
 
 def index() -> rx.Component:
@@ -12,13 +10,14 @@ def index() -> rx.Component:
             rx.card(
                 rx.text("タイムカプセル", font_size="2em", color="white"),
                 align_items="center",
-                padding="1em",
+                padding="3em 5em",
+                margin_bottom="3em",
                 border_radius="20px",
                 background_color="royalblue",
             ),
             rx.card(
                 rx.text(
-                    "このサイトではみんなとの思い出をタイムカプセルに保存し、忘れたころにみんなで見て過去を懐かしむサイトです。",
+                    "このサイトでは友人との思い出をタイムカプセルに保存し、忘れたころに友人と開けることで過去を懐かしむサイトです。",
                     font_size="1em",
                     color="dimgray",
                 ),
@@ -30,19 +29,21 @@ def index() -> rx.Component:
             rx.hstack(
                 rx.button(
                     "制作する",
-                    padding="1em 2em",
+                    padding="2em 4em",
                     border_radius="8px",
                     background_color="limegreen",
                     color="white",
                 ),
+                rx.spacer(),
                 rx.button(
                     "閲覧する",
-                    padding="1em 2em",
+                    padding="2em 4em",
                     border_radius="8px",
                     background_color="orange",
                     color="white",
                 ),
                 justify="center",
+                width="50%",
             ),
             align_items="center",  # カード内の要素を中央寄せ
             justify_content="center",  # カード内の要素を中央寄せ
@@ -62,4 +63,5 @@ def index() -> rx.Component:
 
 
 app = rx.App()
+app.add_page(index)
 app.add_page(index)
