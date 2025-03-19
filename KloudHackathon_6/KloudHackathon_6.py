@@ -1,17 +1,7 @@
-import reflex as rx  # Reflexライブラリをインポート
+import reflex as rx
 
-
-class State(rx.State):
-    name: str = ""
-
-    @rx.var
-    def get_name(self) -> str:
-        """Stateの名前を取得する (ReflexのStateに適合)"""
-        return self.name
-
-    def set_name(self, name: str):
-        """入力された名前を State に保存する"""
-        return rx.event(setattr(self, "name", name))
+import KloudHackathon_6.state as state
+from KloudHackathon_6 import style
 
 
 def go_to_production_page():  # 制作ページへ移動するための関数
@@ -75,7 +65,7 @@ def index() -> rx.Component:  # index関数を定義（ページのコンテン�
     )
 
 
-def production_page():
+def production_page() -> rx.Component:
     return rx.vstack(  # 垂直方向に要素を配置するvstackコンポーネントを返す
         rx.color_mode.button(
             position="top-right"
@@ -120,20 +110,16 @@ def production_page():
     )
 
 
-def chat_page():
+def chat_page() -> rx.Component:
     return rx.vstack(
-        children=[
-            rx.text("名前を入力してください"),
-            rx.input(
-                placeholder="名前",
-                id="name_input",
-                width="300px",
-                on_change=State.set_name,
-            ),
-            rx.text(
-                lambda: f"あなたが入力した名前: {State.name}"
-            ),  # State.name をリアルタイムに更新
-        ]
+        rx.text("名前を入力してください"),
+        rx.input(
+            placeholder="名前",
+            id="name_input",
+            width="300px",
+            on_change=state.NameState.set_name,
+        ),
+        rx.text(f"あなたが入力した名前: {state.NameState.name}"),
     )
 
 
@@ -142,4 +128,4 @@ app.add_page(index, route="/")  # index関数をページとして追加
 app.add_page(
     production_page, route="/production_page"
 )  # production_page関数をページとして追加
-app.add_page(chat_page, route="/chatpage")
+app.add_page(chat_page, route="/chat_page")
