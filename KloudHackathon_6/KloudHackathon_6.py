@@ -1,167 +1,122 @@
+from turtle import width
+
 import reflex as rx
 
 import KloudHackathon_6.state as state
-from KloudHackathon_6 import style
 
 
-def go_to_production_page():  # 制作ページへ移動するための関数
-    return rx.redirect("/production_page")
+def header(title: str) -> rx.Component:
+    return rx.flex(
+        rx.button(
+            "ホーム",
+            on_click=rx.redirect("/"),
+            margin="1em",
+        ),
+        rx.box(
+            title,
+            font_size="2em",
+            width="100%",
+            text_align="center",
+        ),
+        align="center",
+        justify="center",
+        width="100%",
+        min_height="60px",
+    )
 
-def go_to_info_page(): # 情報登録ページへ移動するための関数
-    return rx.redirect("/info_page")
 
-
-def index() -> rx.Component:  # index関数を定義（ページのコンテンツを返す）
-    return rx.vstack(  # 垂直方向に要素を配置するvstackコンポーネントを返す
-        rx.color_mode.button(
-            position="top-right"
-        ),  # カラ―モード切り替えボタンを右上に配置
-        rx.vstack(  # カード全体を囲むvstackを追加
-            rx.card(  # カードコンポーネント（タイムカプセルのタイトル）
-                rx.text(
-                    "タイムカプセル", font_size="2em", color="white"
-                ),  # テキスト「タイムカプセル」
+def index() -> rx.Component:
+    return rx.vstack(
+        header("ようこそ"),
+        rx.flex(
+            rx.card(
+                "かぷせるもーめんと",
+                font_size="2em",
                 align_items="center",  # 要素を中央寄せ
                 padding="3em 5em",  # パディング（上下3em、左右5em）
-                margin_bottom="3em",  # 下マージン（3em）
-                border_radius="20px",  # 角丸（20px）
-                background_color="royalblue",  # 背景色（ロイヤルブルー）
+                margin_bottom="2em",  # 下マージン（3em）
             ),
             rx.card(  # カードコンポーネント（説明文）
-                rx.text(  # テキスト（説明文）
-                    "このサイトでは友人との思い出をタイムカプセルに保存し、忘れたころに友人と開けることで過去を懐かしむサイトです。",
-                    font_size="1em",  # フォントサイズ（1em）
-                    color="dimgray",  # 文字色（濃いグレー）
-                ),
-                padding="2em",  # パディング（2em）
-                border_radius="10px",  # 角丸（10px）
-                margin_y="2em",  # 上下マージン（2em）
-                background_color="lightgray",  # 背景色（薄いグレー）
+                "このサイトでは友人との思い出をタイムカプセルに保存し、忘れたころに友人と開けることで過去を懐かしむサイトです。",
             ),
             rx.hstack(  # 水平方向に要素を配置するhstackコンポーネント
                 rx.button(  # ボタンコンポーネント（制作する）
                     "制作する",
-                    align_items="center",
                     padding="2em 4em",  # パディング（上下2em、左右4em）
-                    border_radius="8px",  # 角丸（8px）
-                    background_color="limegreen",  # 背景色（ライムグリーン）
-                    color="white",  # 文字色（白）
-                    on_click=go_to_production_page,  # 制作ページへ移動
+                    on_click=rx.redirect("/production"),  # 制作ページへ移動
                 ),
-                justify="center",  # 要素を中央寄せ
-                width="50%",  # 幅（50%）
+                justify="center",
+                width="70%",
             ),
-            align_items="center",  # カード内の要素を中央寄せ
-            justify_content="center",  # カード内の要素を中央寄せ
-            width="70%",  # カードの幅（70%）
-            height="50%",  # カードの高さ（50%）
-            max_width="1200px",  # カードの最大幅（1200px）
-            padding="3em",  # カード全体のパディング（3em）
-            border_radius="15px",  # カード全体の角丸（15px）
-            background_color="white",  # カード全体の背景色（白）
-            box_shadow="0 4px 8px rgba(0, 0, 0, 0.1)",  # カードに影を追加
+            direction="column",
+            align="center",
+            justify="center",
+            spacing="4",
+            width="70%",
+            height="100%",
         ),
-        align_items="center",  # 要素を中央寄せ
-        justify_content="center",  # 要素を中央寄せ
-        height="100vh",  # 高さ（100vh）
-        background_color="lavender",  # 背景色（ラベンダー）
+        align="center",
+        width="100vw",
+        height="100vh",
     )
 
 
 def production_page() -> rx.Component:
-    return rx.vstack(  # 垂直方向に要素を配置するvstackコンポーネントを返す
-        rx.color_mode.button(
-            position="top-right"
-        ),  # カラ―モード切り替えボタンを右上に配置
-        rx.card(  # カードコンポーネント（制作ページのタイトル）
-            rx.text(
-                "制作ページ", font_size="2em", color="white"
-            ),
-            align_items="flex-start",  # 要素を上部に固定
-            padding="3em 5em",  # パディング（上下3em、左右5em）
-            margin_bottom="3em",  # 下マージン（3em）
-            border_radius="20px",  # 角丸（20px）
-            background_color="royalblue",  # 背景色（ロイヤルブルー）
-            width="300px",
-            height="50px",
-        ),
-        rx.hstack(  # カード全体を囲むvstackを追加
-            rx.card(  # カードコンポーネント（説明文）
-                rx.input( # 【注意】このインプットは複数選択及び送信がまだ出来ていません。
-                    type="file", # ファイルを受け取るinput
-                    placeholder="ファイルを投げる場所",
-                    id="file_input",
+    return rx.vstack(
+        header("制作ページ"),
+        rx.flex(
+            rx.vstack(  # カード全体を囲むvstackを追加
+                rx.card(  # カードコンポーネント（説明文）
+                    rx.input(  # 【注意】このインプットは複数選択及び送信がまだ出来ていません。
+                        type="file",  # ファイルを受け取るinput
+                        placeholder="ファイルを投げる場所",
+                        id="file_input",
+                    ),
+                    width="100%",
+                    height="80%",
                 ),
-                width="450px",  # カードの幅(450px)
-                height="500px",  # カードの高さ(500px)
-                padding="2em",  # パディング（2em）
-                border_radius="10px",  # 角丸（10px）
-                margin_y="2em",  # 上下マージン（2em）
-                background_color="lightgray",  # 背景色（薄いグレー）
+                width="50%",  # カードの幅(450px)
+                height="100%",  # カードの高さ(500px)
             ),
-            rx.card(  # カードコンポーネント（説明文）
-                rx.text(f"ログ: {state.TextState.chat}"), # 入力されたテキストを表示
-                # ログとして機能していない
-                width="450px", # カードの幅(450px)
-                height="500px", # カードの高さ(500px)
-                padding="2em",  # パディング（2em）
-                border_radius="10px",  # 角丸（10px）
-                margin_y="2em",  # 上下マージン（2em）
-                background_color="lightgray",  # 背景色（薄いグレー）
+            rx.vstack(
+                rx.card(  # カードコンポーネント（説明文）
+                    rx.text(f"ログ: {state.TextState.chat}"),
+                    width="100%",
+                    height="80%",
+                ),
+                rx.hstack(
+                    rx.input(
+                        type="text",  # テキストを受け取るinput
+                        placeholder="テキストを入力",
+                        id="chat_input",
+                        # width="300px",  # 入力ウィンドウの幅
+                        on_change=state.TextState.set_chat,
+                    ),
+                    rx.button("->"),
+                    height="20%",
+                ),
+                width="50%",
+                height="100%",
             ),
+            direction="row",
+            align="center",
+            justify="center",
+            width="80%",
+            height="80%",
         ),
-        rx.hstack(
-            rx.input(
-                type="text", # テキストを受け取るinput
-                placeholder="テキストを入力",
-                id="chat_input",
-                width="300px", # 入力ウィンドウの幅
-                on_change=state.TextState.set_chat,
-            ),
-            rx.button(
-                rx.text("->"), # このボタンを押したら入力内容を保存してログに入れたい
-            ),
-        ),
-        rx.vstack( # ココに通知する日時など...
-            rx.card(
-                width="750px",
-                height="550px",
-            ),
-            margin_y="5em",
-        ),
-        rx.button(  # ボタンコンポーネント（制作する）
+        rx.button(
             "制作終了",
-            align_items="center",
-            padding="2em 4em",  # パディング（上下2em、左右4em）
-            border_radius="8px",  # 角丸（8px）
-            background_color="limegreen",  # 背景色（ライムグリーン）
-            color="white",  # 文字色（白）
-            on_click=go_to_info_page,  # 制作ページへ移動
+            on_click=rx.redirect("/info"),  # 制作ページへ移動
         ),
-
-        align_items="center",  # 要素を中央寄せ
-        justify_content="center",  # 要素を中央寄せ
-        height="160vh",  # 高さ（160vh）
-        background_color="lavender",  # 背景色（ラベンダー）
+        align="center",
+        width="100vw",
+        height="100vh",
     )
+
 
 def info_page() -> rx.Component:
     return rx.vstack(
-        rx.color_mode.button(
-            position="top-right"
-        ),
-        rx.card(  # カードコンポーネント（情報登録ページのタイトル）
-            rx.text(
-                "情報登録ページ", font_size="2em", color="white"
-            ),
-            align_items="flex-start",  # 要素を上部に固定
-            padding="3em 5em",  # パディング（上下3em、左右5em）
-            margin_bottom="3em",  # 下マージン（3em）
-            border_radius="20px",  # 角丸（20px）
-            background_color="royalblue",  # 背景色（ロイヤルブルー）
-            width="300px",
-            height="50px",
-        ),
+        header("情報登録ページ"),
         rx.card(
             rx.hstack(
                 rx.input(
@@ -181,23 +136,17 @@ def info_page() -> rx.Component:
             width="900px",
             height="800px",
         ),
-
         align_items="center",  # 要素を中央寄せ
         justify_content="center",  # 要素を中央寄せ
         height="100vh",  # 高さ（100vh）
-        background_color="lavender",  # 背景色（ラベンダー）
     )
 
 
 def view_page() -> rx.Component:
     return rx.vstack(
-        rx.color_mode.button(
-            position="top-right"
-        ),
+        rx.color_mode.button(position="top-right"),
         rx.card(  # カードコンポーネント（閲覧ページのタイトル）
-            rx.text(
-                "閲覧ページ", font_size="2em", color="white"
-            ),
+            rx.text("閲覧ページ", font_size="2em", color="white"),
             align_items="flex-start",  # 要素を上部に固定
             padding="3em 5em",  # パディング（上下3em、左右5em）
             margin_bottom="3em",  # 下マージン（3em）
@@ -232,6 +181,7 @@ def view_page() -> rx.Component:
         background_color="lavender",  # 背景色（ラベンダー）
     )
 
+
 def chat_page() -> rx.Component:
     return rx.vstack(
         rx.text("名前を入力してください"),
@@ -245,11 +195,17 @@ def chat_page() -> rx.Component:
     )
 
 
-app = rx.App()  # アプリケーションインスタンスを作成
+app = rx.App(
+    theme=rx.theme(
+        appearance="light",
+        has_background=True,
+        radius="large",
+        accent_color="teal",
+        box_border="1em",
+    )
+)
 app.add_page(index, route="/")  # index関数をページとして追加
-app.add_page(
-    production_page, route="/production_page"
-)  # production_page関数をページとして追加
-app.add_page(info_page, route="/info_page")
-app.add_page(view_page, route="/view_page")
-app.add_page(chat_page, route="/chat_page") # 試験的に利用しているページ。実装はしない。
+app.add_page(production_page, route="/production")
+app.add_page(info_page, route="/info")
+app.add_page(view_page, route="/view")
+app.add_page(chat_page, route="/chat")  # 試験実装
